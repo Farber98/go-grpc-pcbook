@@ -10,7 +10,7 @@ import "proto/storage_message.proto";
 import "google/protobuf/timestamp.proto";
 
 message Laptop {
-    int32 id = 1;
+    string id = 1;
     string brand = 2;
     string name = 3;
     CPU cpu = 4;
