@@ -9,3 +9,7 @@ clean:
 # runs main file.
 run:
 	go run main.go
+
+# run all the tests
+test: 
+	go test -cover -race ./...

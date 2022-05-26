@@ -3,9 +3,14 @@ package sample
 import (
 	"go-grpc-pcbook/pb"
 	"math/rand"
+	"time"
 
 	"github.com/google/uuid"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 /********* Keyboard *********/
 func randomKeyboardLayout() pb.Keyboard_Layout {
