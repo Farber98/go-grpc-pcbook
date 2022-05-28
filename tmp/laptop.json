@@ -1,25 +1,25 @@
 {
- "id":  "2be8dddf-a49c-445e-b146-3017e9a4ce9b",
- "brand":  "Apple",
- "name":  "Macbook Air",
+ "id":  "c3f90cf9-51ae-4a84-b841-03ee06f21525",
+ "brand":  "Lenovo",
+ "name":  "Thinkpad X1",
  "cpu":  {
-  "brand":  "Intel",
-  "name":  "Core i5-9400F",
-  "cores":  2,
-  "threads":  11,
-  "min_ghz":  2.2505266909443358,
-  "max_ghz":  3.59172930992795
+  "brand":  "AMD",
+  "name":  "Ryzen 7 PRO 2700U",
+  "cores":  3,
+  "threads":  6,
+  "min_ghz":  3.2777277096121504,
+  "max_ghz":  3.6760500974267014
  },
  "memory":  {
-  "value":  "36",
+  "value":  "17",
   "unit":  "GIGABYTE"
  },
  "gpu":  [
   {
-   "brand":  "NVIDIA",
-   "name":  "RTX 2070",
-   "min_ghz":  3.368490110742699,
-   "max_ghz":  4.623521258017179,
+   "brand":  "AMD",
+   "name":  "RX 5700-XT",
+   "min_ghz":  2.0200063156072567,
+   "max_ghz":  4.004213970521151,
    "memory":  {
     "value":  "2",
     "unit":  "GIGABYTE"
@@ -30,33 +30,33 @@
   {
    "driver":  "HDD",
    "memory":  {
-    "value":  "3",
+    "value":  "2",
     "unit":  "TERABYTE"
    }
   },
   {
    "driver":  "SSD",
    "memory":  {
-    "value":  "300",
+    "value":  "741",
     "unit":  "GIGABYTE"
    }
   }
  ],
  "screen":  {
-  "size_inch":  15.31667,
+  "size_inch":  14.253483,
   "resolution":  {
-   "width":  7580,
-   "height":  4264
+   "width":  5928,
+   "height":  3335
   },
   "panel":  "IPS",
   "multitouch":  true
  },
  "keyboard":  {
-  "layout":  "QWERTY",
+  "layout":  "QWERTZ",
   "backlit":  false
  },
- "weight_kg":  2.9828059085412684,
- "price":  1776.1872848110715,
- "release_year":  2021,
- "updated_at":  "2022-05-28T19:09:27.506978559Z"
+ "weight_kg":  1.2077010131007349,
+ "price":  1526.3812427273804,
+ "release_year":  2019,
+ "updated_at":  "2022-05-28T19:38:34.150676651Z"
 }

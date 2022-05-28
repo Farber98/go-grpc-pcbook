@@ -16,6 +16,7 @@ var (
 type LaptopStore interface {
 	// Saves laptop to the store
 	Save(laptop *pb.Laptop) error
+	Find(id string) (*pb.Laptop, error)
 }
 
 type MemoryLaptopStore struct {
@@ -47,4 +48,22 @@ func (m *MemoryLaptopStore) Save(laptop *pb.Laptop) error {
 
 	m.data[laptop.Id] = other
 	return nil
+}
+
+func (m *MemoryLaptopStore) Find(id string) (*pb.Laptop, error) {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
+	laptop, ok := m.data[id]
+	if !ok {
+		return nil, fmt.Errorf("Given laptop it's not in the store")
+	}
+
+	// deep copy
+	other := &pb.Laptop{}
+	err := copier.Copy(other, laptop)
+	if err != nil {
+		return nil, fmt.Errorf("Couldn't copy laptop data: %w", err)
+	}
+
+	return other, nil
 }

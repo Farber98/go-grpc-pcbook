@@ -5,7 +5,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func protobufToJson(message proto.Message) ([]byte, error) {
+func ProtobufToJson(message proto.Message) ([]byte, error) {
 	marshaler := protojson.MarshalOptions{
 		UseEnumNumbers:  false,
 		EmitUnpopulated: true,

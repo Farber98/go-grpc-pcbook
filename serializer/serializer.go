@@ -22,7 +22,7 @@ func WriteProtobufToBinaryFile(message proto.Message, filename string) error {
 }
 
 func WriteProtobufToJSONFile(message proto.Message, filename string) error {
-	data, err := protobufToJson(message)
+	data, err := ProtobufToJson(message)
 	if err != nil {
 		return fmt.Errorf("couldn't marshall proto message to JSON: %w", err)
 	}
