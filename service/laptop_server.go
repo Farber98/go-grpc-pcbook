@@ -15,14 +15,14 @@ type LaptopServer struct {
 	Store LaptopStore
 }
 
-func NewLaptopServer() *LaptopServer {
-	return &LaptopServer{}
+func NewLaptopServer(store LaptopStore) *LaptopServer {
+	return &LaptopServer{store}
 }
 
 // Unary RPC to create new laptop.
 func (s *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopRequest) (*pb.CreateLaptopResponse, error) {
 	laptop := req.GetLaptop()
-	log.Println("Received a create-laptop request with id: %v", laptop.Id)
+	log.Println("Received a create-laptop request with id: ", laptop.Id)
 
 	if len(laptop.Id) > 0 {
 		// Check valid UUID

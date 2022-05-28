@@ -1,62 +1,62 @@
 {
- "id": "e75ef2e9-4862-4a98-9be4-c130bdeaf83c",
- "brand": "Apple",
- "name": "Macbook Pro",
- "cpu": {
-  "brand": "AMD",
-  "name": "Ryzen 3 PRO 3200GE",
-  "cores": 7,
-  "threads": 7,
-  "min_ghz": 3.115843366030805,
-  "max_ghz": 3.4280405892649997
+ "id":  "2be8dddf-a49c-445e-b146-3017e9a4ce9b",
+ "brand":  "Apple",
+ "name":  "Macbook Air",
+ "cpu":  {
+  "brand":  "Intel",
+  "name":  "Core i5-9400F",
+  "cores":  2,
+  "threads":  11,
+  "min_ghz":  2.2505266909443358,
+  "max_ghz":  3.59172930992795
  },
- "memory": {
-  "value": "62",
-  "unit": "GIGABYTE"
+ "memory":  {
+  "value":  "36",
+  "unit":  "GIGABYTE"
  },
- "gpu": [
+ "gpu":  [
   {
-   "brand": "AMD",
-   "name": "RX 590",
-   "min_ghz": 3.397246821081225,
-   "max_ghz": 4.9521770618720575,
-   "memory": {
-    "value": "2",
-    "unit": "GIGABYTE"
+   "brand":  "NVIDIA",
+   "name":  "RTX 2070",
+   "min_ghz":  3.368490110742699,
+   "max_ghz":  4.623521258017179,
+   "memory":  {
+    "value":  "2",
+    "unit":  "GIGABYTE"
    }
   }
  ],
- "storage": [
+ "storage":  [
   {
-   "driver": "HDD",
-   "memory": {
-    "value": "2",
-    "unit": "TERABYTE"
+   "driver":  "HDD",
+   "memory":  {
+    "value":  "3",
+    "unit":  "TERABYTE"
    }
   },
   {
-   "driver": "SSD",
-   "memory": {
-    "value": "188",
-    "unit": "GIGABYTE"
+   "driver":  "SSD",
+   "memory":  {
+    "value":  "300",
+    "unit":  "GIGABYTE"
    }
   }
  ],
- "screen": {
-  "size_inch": 16.033838,
-  "resolution": {
-   "width": 3904,
-   "height": 2196
+ "screen":  {
+  "size_inch":  15.31667,
+  "resolution":  {
+   "width":  7580,
+   "height":  4264
   },
-  "panel": "OLED",
-  "multitouch": false
+  "panel":  "IPS",
+  "multitouch":  true
  },
- "keyboard": {
-  "layout": "QWERTZ",
-  "backlit": false
+ "keyboard":  {
+  "layout":  "QWERTY",
+  "backlit":  false
  },
- "weight_kg": 1.6499261838810602,
- "price": 2276.4721538938506,
- "release_year": 2019,
- "updated_at": "2022-05-26T17:22:41.680663638Z"
+ "weight_kg":  2.9828059085412684,
+ "price":  1776.1872848110715,
+ "release_year":  2021,
+ "updated_at":  "2022-05-28T19:09:27.506978559Z"
 }

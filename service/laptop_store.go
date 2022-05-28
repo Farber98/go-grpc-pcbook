@@ -26,7 +26,7 @@ type MemoryLaptopStore struct {
 type databaseLaptopStore struct {
 }
 
-func (m *MemoryLaptopStore) NewMemoryLaptopStore(laptop *pb.Laptop) *MemoryLaptopStore {
+func NewMemoryLaptopStore() *MemoryLaptopStore {
 	return &MemoryLaptopStore{data: make(map[string]*pb.Laptop)}
 }
 

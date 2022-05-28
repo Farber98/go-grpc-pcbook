@@ -43,21 +43,19 @@ func (c *laptopServiceClient) CreateLaptop(ctx context.Context, in *CreateLaptop
 }
 
 // LaptopServiceServer is the server API for LaptopService service.
-// All implementations must embed UnimplementedLaptopServiceServer
+// All implementations should embed UnimplementedLaptopServiceServer
 // for forward compatibility
 type LaptopServiceServer interface {
 	CreateLaptop(context.Context, *CreateLaptopRequest) (*CreateLaptopResponse, error)
-	mustEmbedUnimplementedLaptopServiceServer()
 }
 
-// UnimplementedLaptopServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedLaptopServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedLaptopServiceServer struct {
 }
 
 func (UnimplementedLaptopServiceServer) CreateLaptop(context.Context, *CreateLaptopRequest) (*CreateLaptopResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLaptop not implemented")
 }
-func (UnimplementedLaptopServiceServer) mustEmbedUnimplementedLaptopServiceServer() {}
 
 // UnsafeLaptopServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to LaptopServiceServer will
