@@ -6,9 +6,13 @@ gen:
 clean:
 	rm pb/*.go
 
-# runs main file.
-run:
-	go run main.go
+# runs server.
+server:
+	go run cmd/server/main.go
+
+# runs client.
+client:
+	go run cmd/client/main.go
 
 # run all the tests
 test: 
