@@ -5,6 +5,7 @@ import (
 	"errors"
 	"go-grpc-pcbook/pb"
 	"log"
+	"time"
 
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
@@ -37,6 +38,21 @@ func (s *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopReq
 			return nil, status.Errorf(codes.Internal, "Couldn't generate laptop UUID: %v", err)
 		}
 		laptop.Id = id.String() // conver UUID to string format.
+	}
+
+	// Supposed heavy processing.
+	time.Sleep(6 * time.Second)
+
+	// Check ctx deadline exceeded before saving to storage.
+	if ctx.Err() == context.DeadlineExceeded {
+		log.Printf("deadline exceeded. Aborting create-laptop req with id %s", laptop.Id)
+		return nil, status.Error(codes.DeadlineExceeded, "Deadline exceeded.")
+	}
+
+	// Check ctx hasn't been cancelled before saving to storage.
+	if ctx.Err() == context.Canceled {
+		log.Printf("context cancelled. Aborting create-laptop req with id %s", laptop.Id)
+		return nil, status.Error(codes.Canceled, "context cancelled.")
 	}
 
 	// Save storage.

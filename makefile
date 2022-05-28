@@ -8,11 +8,11 @@ clean:
 
 # runs server.
 server:
-	go run cmd/server/main.go
+	go run cmd/server/main.go -port 3033
 
 # runs client.
 client:
-	go run cmd/client/main.go
+	go run cmd/client/main.go -addr 0.0.0.0:3033
 
 # run all the tests
 test: 
