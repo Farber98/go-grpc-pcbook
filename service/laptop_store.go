@@ -7,7 +7,6 @@ import (
 	"go-grpc-pcbook/pb"
 	"log"
 	"sync"
-	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -78,8 +77,8 @@ func (m *MemoryLaptopStore) Search(ctx context.Context, filter *pb.Filter, found
 			log.Printf("context cancelled. Aborting search-laptop req with filter %s", filter)
 			return errors.New("Context cancelled.")
 		}
-		time.Sleep(time.Second)
-		log.Print("checking laptop id", laptop.GetId())
+		//time.Sleep(time.Second)
+		//log.Print("checking laptop id", laptop.GetId())
 		if isQualified(filter, laptop) {
 
 			other, err := deepCopy(laptop)
