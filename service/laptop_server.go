@@ -5,7 +5,6 @@ import (
 	"errors"
 	"go-grpc-pcbook/pb"
 	"log"
-	"time"
 
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
@@ -41,7 +40,7 @@ func (s *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopReq
 	}
 
 	// Supposed heavy processing.
-	time.Sleep(6 * time.Second)
+	//time.Sleep(4 * time.Second)
 
 	// Check ctx deadline exceeded before saving to storage.
 	if ctx.Err() == context.DeadlineExceeded {
@@ -71,4 +70,26 @@ func (s *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopReq
 	return &pb.CreateLaptopResponse{
 		Id: laptop.Id,
 	}, nil
+}
+
+func (s *LaptopServer) SearchLaptop(req *pb.SearchLaptopRequest, stream pb.LaptopService_SearchLaptopServer) error {
+	filter := req.GetFilter()
+	log.Println("Received a search-laptop request with filter: ", filter)
+
+	err := s.Store.Search(stream.Context(), filter, func(laptop *pb.Laptop) error {
+		res := &pb.SearchLaptopResponse{Laptop: laptop}
+
+		err := stream.Send(res)
+		if err != nil {
+			return err
+		}
+
+		log.Println("sent laptop with id: ", laptop.GetId())
+		return nil
+	})
+
+	if err != nil {
+		return status.Errorf(codes.Internal, "unexpected error: %v", err)
+	}
+	return nil
 }

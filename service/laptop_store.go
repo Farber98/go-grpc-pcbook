@@ -1,10 +1,13 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"go-grpc-pcbook/pb"
+	"log"
 	"sync"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -19,7 +22,7 @@ type LaptopStore interface {
 	// Finds laptop in the store
 	Find(id string) (*pb.Laptop, error)
 	// Filters laptops from the store. Returns one by one via found func.
-	Search(filter *pb.Filter, found func(laptop *pb.Laptop) error) error
+	Search(ctx context.Context, filter *pb.Filter, found func(laptop *pb.Laptop) error) error
 }
 
 type MemoryLaptopStore struct {
@@ -65,13 +68,28 @@ func (m *MemoryLaptopStore) Find(id string) (*pb.Laptop, error) {
 
 }
 
-func (m *MemoryLaptopStore) Search(filter *pb.Filter, found func(laptop *pb.Laptop) error) error {
+func (m *MemoryLaptopStore) Search(ctx context.Context, filter *pb.Filter, found func(laptop *pb.Laptop) error) error {
 	m.mutex.RLock()
 	defer m.mutex.RUnlock()
 
 	for _, laptop := range m.data {
+		// Check ctx deadline exceeded before saving to storage.
+		if ctx.Err() == context.DeadlineExceeded || ctx.Err() == context.Canceled {
+			log.Printf("context cancelled. Aborting search-laptop req with filter %s", filter)
+			return errors.New("Context cancelled.")
+		}
+		time.Sleep(time.Second)
+		log.Print("checking laptop id", laptop.GetId())
 		if isQualified(filter, laptop) {
-			// TODO
+
+			other, err := deepCopy(laptop)
+			if err != nil {
+				return err
+			}
+			err = found(other)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
