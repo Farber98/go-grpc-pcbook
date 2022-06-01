@@ -1,62 +1,62 @@
 {
- "id": "38711f9c-0c90-40e5-93cc-bf363f140383",
- "brand": "Lenovo",
- "name": "Thinkpad X1",
- "cpu": {
-  "brand": "AMD",
-  "name": "Ryzen 7 PRO 2700U",
-  "cores": 6,
-  "threads": 10,
-  "min_ghz": 3.4891063434530536,
-  "max_ghz": 3.8918486298654438
+ "id":  "8ad0d668-993f-4619-a3a2-21740a2019f7",
+ "brand":  "Lenovo",
+ "name":  "Thinkpad P53",
+ "cpu":  {
+  "brand":  "AMD",
+  "name":  "Ryzen 3 PRO 3200GE",
+  "cores":  5,
+  "threads":  5,
+  "min_ghz":  3.181632762661149,
+  "max_ghz":  3.7068898804176107
  },
- "memory": {
-  "value": "35",
-  "unit": "GIGABYTE"
+ "memory":  {
+  "value":  "58",
+  "unit":  "GIGABYTE"
  },
- "gpu": [
+ "gpu":  [
   {
-   "brand": "NVIDIA",
-   "name": "GTX 1660-Ti",
-   "min_ghz": 2.3424744409748,
-   "max_ghz": 3.3795394398046836,
-   "memory": {
-    "value": "5",
-    "unit": "GIGABYTE"
+   "brand":  "NVIDIA",
+   "name":  "RTX 2060",
+   "min_ghz":  3.224491130978471,
+   "max_ghz":  3.9809809581754267,
+   "memory":  {
+    "value":  "5",
+    "unit":  "GIGABYTE"
    }
   }
  ],
- "storage": [
+ "storage":  [
   {
-   "driver": "HDD",
-   "memory": {
-    "value": "4",
-    "unit": "TERABYTE"
+   "driver":  "HDD",
+   "memory":  {
+    "value":  "5",
+    "unit":  "TERABYTE"
    }
   },
   {
-   "driver": "SSD",
-   "memory": {
-    "value": "284",
-    "unit": "GIGABYTE"
+   "driver":  "SSD",
+   "memory":  {
+    "value":  "538",
+    "unit":  "GIGABYTE"
    }
   }
  ],
- "screen": {
-  "size_inch": 14.750851,
-  "resolution": {
-   "width": 6864,
-   "height": 3861
+ "screen":  {
+  "size_inch":  14.852138,
+  "resolution":  {
+   "width":  6570,
+   "height":  3696
   },
-  "panel": "IPS",
-  "multitouch": true
+  "panel":  "IPS",
+  "multitouch":  true
  },
- "keyboard": {
-  "layout": "AZERTY",
-  "backlit": false
+ "keyboard":  {
+  "layout":  "QWERTY",
+  "backlit":  false
  },
- "weight_kg": 3.7433942035473815,
- "price": 2690.0481735633266,
- "release_year": 2018,
- "updated_at": "2022-05-28T21:24:16.715397664Z"
+ "weight_kg":  3.364066566869094,
+ "price":  2049.462194526474,
+ "release_year":  2020,
+ "updated_at":  "2022-06-01T11:32:57.480587106Z"
 }
