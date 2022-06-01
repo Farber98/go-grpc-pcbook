@@ -100,7 +100,7 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 	}
 
 	laptopId := req.GetInfo().GetLaptopId()
-	imageType := req.GetInfo().GetLaptopId()
+	imageType := req.GetInfo().GetImageType()
 	log.Println("Received an upload-image request for laptop: ", laptopId)
 
 	laptop, err := s.LaptopStore.Find(laptopId)
@@ -159,7 +159,7 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 	}
 
 	//if image is saved successfully, return image response and clos stream.
-	res := &pb.UploadImageResponse{Id: laptopId, Size: uint32(imageSize)}
+	res := &pb.UploadImageResponse{Id: imageId, Size: uint32(imageSize)}
 
 	err = stream.SendAndClose(res)
 	if err != nil {
