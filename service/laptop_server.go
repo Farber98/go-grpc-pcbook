@@ -48,19 +48,13 @@ func (s *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopReq
 	//time.Sleep(4 * time.Second)
 
 	// Check ctx deadline exceeded before saving to storage.
-	if ctx.Err() == context.DeadlineExceeded {
-		log.Printf("deadline exceeded. Aborting create-laptop req with id %s", laptop.Id)
-		return nil, status.Error(codes.DeadlineExceeded, "Deadline exceeded.")
-	}
-
-	// Check ctx hasn't been cancelled before saving to storage.
-	if ctx.Err() == context.Canceled {
-		log.Printf("context cancelled. Aborting create-laptop req with id %s", laptop.Id)
-		return nil, status.Error(codes.Canceled, "context cancelled.")
+	err := contextError(ctx, laptop.Id)
+	if err != nil {
+		return nil, err
 	}
 
 	// Save storage.
-	err := s.LaptopStore.Save(laptop)
+	err = s.LaptopStore.Save(laptop)
 	if err != nil {
 		if errors.Is(err, ErrAlreadyExists) {
 			return nil, status.Errorf(codes.AlreadyExists, "Couldn't save laptop to store. UUID already exists: %v", err)
@@ -121,10 +115,14 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 	//start receiving image chunks.
 	imageData := bytes.Buffer{}
 	imageSize := 0
-
+	log.Println("Receiving data...")
 	for {
-		log.Println("Receiving data...")
+		// testing purposes
+		//time.Sleep(time.Second)
 
+		if err := contextError(stream.Context(), laptopId); err != nil {
+			return err
+		}
 		req, err := stream.Recv()
 		if err == io.EOF {
 			log.Print("no more data")
@@ -139,7 +137,7 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 		chunk := req.GetChunkData()
 		size := len(chunk)
 		imageSize += size
-
+		log.Println("Received chunk with size: ", size)
 		// check if image size is greater than the allowed.
 		if imageSize > maxImageSize {
 			return logError(status.Errorf(codes.InvalidArgument, "image is too large: %d > %d", imageSize, maxImageSize))
@@ -178,4 +176,19 @@ func logError(err error) error {
 		log.Print(err)
 	}
 	return err
+}
+
+func contextError(ctx context.Context, text string) error {
+	switch ctx.Err() {
+	case context.DeadlineExceeded:
+		log.Printf("deadline exceeded. Aborting req with laptop-id %s", text)
+		return logError(status.Error(codes.DeadlineExceeded, "Deadline exceeded."))
+
+	case context.Canceled:
+		log.Printf("context cancelled. Aborting req with laptop-id %s", text)
+		return logError(status.Error(codes.Canceled, "context cancelled."))
+
+	default:
+		return nil
+	}
 }

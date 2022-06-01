@@ -1,12 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"flag"
 	"go-grpc-pcbook/pb"
 	"go-grpc-pcbook/sample"
 	"io"
 	"log"
+	"os"
+	"path/filepath"
 	"time"
 
 	"google.golang.org/grpc"
@@ -14,9 +17,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func createLaptop(laptopClient pb.LaptopServiceClient) {
-
-	laptop := sample.NewLaptop()
+func createLaptop(laptopClient pb.LaptopServiceClient, laptop *pb.Laptop) {
 	req := &pb.CreateLaptopRequest{
 		Laptop: laptop,
 	}
@@ -71,6 +72,92 @@ func searchLaptop(laptopClient pb.LaptopServiceClient, filter *pb.Filter) {
 	}
 }
 
+func uploadImage(laptopClient pb.LaptopServiceClient, laptopId, imagePath string) {
+	file, err := os.Open(imagePath)
+	if err != nil {
+		log.Fatal("couldn't open file: ", err)
+	}
+	defer file.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	stream, err := laptopClient.UploadImage(ctx)
+	if err != nil {
+		log.Fatal("couldn't upload image: ", err)
+	}
+
+	req := &pb.UploadImageRequest{
+		Data: &pb.UploadImageRequest_Info{
+			Info: &pb.ImageInfo{
+				LaptopId:  laptopId,
+				ImageType: filepath.Ext(imagePath),
+			},
+		},
+	}
+
+	err = stream.Send(req)
+	if err != nil {
+		log.Fatal("couldn't send image info: ", err)
+	}
+
+	reader := bufio.NewReader(file)
+	buffer := make([]byte, 1024)
+
+	for {
+		n, err := reader.Read(buffer)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal("couldn't read chunk from buffer: ", err)
+		}
+
+		req := &pb.UploadImageRequest{
+			Data: &pb.UploadImageRequest_ChunkData{
+				ChunkData: buffer[:n],
+			},
+		}
+
+		err = stream.Send(req)
+		if err != nil {
+			log.Fatal("couldn't send chunk to server: ", err)
+		}
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatal("couldn't receive response: ", err, stream.RecvMsg(nil)) // get error from sv
+	}
+
+	log.Printf("image uploaded with id %s and size %d", res.GetId(), res.GetSize())
+}
+
+func testUploadImage(laptopClient pb.LaptopServiceClient) {
+	laptop := sample.NewLaptop()
+	createLaptop(laptopClient, laptop)
+	uploadImage(laptopClient, laptop.GetId(), "tmp/laptop.jpg")
+}
+
+func testCreateLaptop(laptopClient pb.LaptopServiceClient) {
+	createLaptop(laptopClient, sample.NewLaptop())
+}
+
+func testSearchLaptop(laptopClient pb.LaptopServiceClient) {
+	for i := 0; i < 10; i++ {
+		createLaptop(laptopClient, sample.NewLaptop())
+	}
+
+	filter := &pb.Filter{
+		MaxPrice: 3000,
+		MinCores: 4,
+		MinGhz:   2.5,
+		MinRam:   &pb.Memory{Value: 8, Unit: pb.Memory_GIGABYTE},
+	}
+
+	searchLaptop(laptopClient, filter)
+}
+
 func main() {
 	serverAddress := flag.String("addr", "", "server address")
 	flag.Parse()
@@ -83,15 +170,6 @@ func main() {
 
 	laptopClient := pb.NewLaptopServiceClient(conn)
 
-	for i := 0; i < 10; i++ {
-		createLaptop(laptopClient)
-	}
+	testUploadImage(laptopClient)
 
-	filter := &pb.Filter{
-		MaxPrice: 3000,
-		MinCores: 4,
-		MinGhz:   2.5,
-		MinRam:   &pb.Memory{Value: 8, Unit: pb.Memory_GIGABYTE},
-	}
-	searchLaptop(laptopClient, filter)
 }
