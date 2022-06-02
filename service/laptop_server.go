@@ -116,7 +116,7 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 	//start receiving image chunks.
 	imageData := bytes.Buffer{}
 	imageSize := 0
-	log.Println("Receiving data...")
+	log.Println("Receiving chunks...")
 	for {
 		// testing purposes
 		//time.Sleep(time.Second)
@@ -126,7 +126,7 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 		}
 		req, err := stream.Recv()
 		if err == io.EOF {
-			log.Print("no more data")
+			log.Print("no more chunks to receive")
 			break
 		}
 
@@ -173,13 +173,14 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 }
 
 func (s *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer) error {
+	log.Println("Rating laptops...")
 	for {
 		if err := contextError(stream.Context()); err != nil {
 			return err
 		}
 		req, err := stream.Recv()
 		if err == io.EOF {
-			log.Print("no more data")
+			log.Print("no more laptops to rate")
 			break
 		}
 
@@ -213,8 +214,10 @@ func (s *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer) erro
 		if err != nil {
 			return logError(status.Errorf(codes.Unknown, "couldn't send stream response: %v", err))
 		}
+		log.Println("Rated laptop with id", laptopId)
 
 	}
+	return nil
 }
 
 func logError(err error) error {
