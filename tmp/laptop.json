@@ -1,25 +1,25 @@
 {
- "id": "0be7e7e1-db8d-44fe-854b-8f1740c547c3",
- "brand": "Dell",
- "name": "Latitude",
+ "id": "779530a5-9443-432e-8b5b-7fdee1b64640",
+ "brand": "Lenovo",
+ "name": "Thinkpad P1",
  "cpu": {
-  "brand": "AMD",
-  "name": "Ryzen 7 PRO 2700U",
-  "cores": 7,
-  "threads": 11,
-  "min_ghz": 2.648535557112659,
-  "max_ghz": 3.7976521236241085
+  "brand": "Intel",
+  "name": "Core i5-9400F",
+  "cores": 4,
+  "threads": 12,
+  "min_ghz": 2.2438122343522413,
+  "max_ghz": 2.7155010595766695
  },
  "memory": {
-  "value": "9",
+  "value": "12",
   "unit": "GIGABYTE"
  },
  "gpu": [
   {
-   "brand": "NVIDIA",
-   "name": "GTX 1070",
-   "min_ghz": 3.185423093326302,
-   "max_ghz": 4.159968955241927,
+   "brand": "AMD",
+   "name": "RX 580",
+   "min_ghz": 2.9357768691182606,
+   "max_ghz": 3.8402530628836002,
    "memory": {
     "value": "3",
     "unit": "GIGABYTE"
@@ -30,33 +30,33 @@
   {
    "driver": "HDD",
    "memory": {
-    "value": "5",
+    "value": "3",
     "unit": "TERABYTE"
    }
   },
   {
    "driver": "SSD",
    "memory": {
-    "value": "661",
+    "value": "682",
     "unit": "GIGABYTE"
    }
   }
  ],
  "screen": {
-  "size_inch": 13.067954,
+  "size_inch": 13.034789,
   "resolution": {
-   "width": 2448,
-   "height": 1377
+   "width": 5617,
+   "height": 3160
   },
-  "panel": "OLED",
-  "multitouch": true
+  "panel": "IPS",
+  "multitouch": false
  },
  "keyboard": {
-  "layout": "AZERTY",
-  "backlit": true
+  "layout": "QWERTZ",
+  "backlit": false
  },
- "weight_kg": 3.0075272617009796,
- "price": 1715.1552241655118,
- "release_year": 2019,
- "updated_at": "2022-06-02T11:33:35.521109702Z"
+ "weight_kg": 3.226553124329799,
+ "price": 2143.384023815586,
+ "release_year": 2018,
+ "updated_at": "2022-06-02T12:52:42.975970831Z"
 }
