@@ -18,10 +18,11 @@ const maxImageSize = 1 << 20
 type LaptopServer struct {
 	LaptopStore LaptopStore
 	ImageStore  ImageStore
+	RatingStore RatingStore
 }
 
-func NewLaptopServer(laptopStore LaptopStore, imageStore ImageStore) *LaptopServer {
-	return &LaptopServer{laptopStore, imageStore}
+func NewLaptopServer(laptopStore LaptopStore, imageStore ImageStore, ratingStore RatingStore) *LaptopServer {
+	return &LaptopServer{laptopStore, imageStore, ratingStore}
 }
 
 // Unary RPC to create new laptop.
@@ -172,7 +173,48 @@ func (s *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServer) er
 }
 
 func (s *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer) error {
-	return nil
+	for {
+		if err := contextError(stream.Context()); err != nil {
+			return err
+		}
+		req, err := stream.Recv()
+		if err == io.EOF {
+			log.Print("no more data")
+			break
+		}
+
+		if err != nil {
+			return logError(status.Errorf(codes.Unknown, "couldn't receive stream data: %v", err))
+		}
+
+		laptopId := req.LaptopId
+		score := req.Score
+
+		found, err := s.LaptopStore.Find(laptopId)
+		if err != nil {
+			return logError(status.Errorf(codes.Internal, "couldn't find laptop: %v", err))
+		}
+		if found == nil {
+			return logError(status.Errorf(codes.InvalidArgument, "laptop %s is not found", laptopId))
+		}
+
+		rating, err := s.RatingStore.Add(laptopId, score)
+		if err != nil {
+			return logError(status.Errorf(codes.Internal, "couldn't rate laptop: %v", err))
+		}
+
+		res := &pb.RateLaptopResponse{
+			LaptopId:     laptopId,
+			RatedCount:   uint32(rating.count),
+			AverageScore: rating.score / float64(rating.count),
+		}
+
+		err = stream.Send(res)
+		if err != nil {
+			return logError(status.Errorf(codes.Unknown, "couldn't send stream response: %v", err))
+		}
+
+	}
 }
 
 func logError(err error) error {
@@ -182,7 +224,7 @@ func logError(err error) error {
 	return err
 }
 
-func contextError(ctx context.Context, text string) error {
+func contextError(ctx context.Context, text ...string) error {
 	switch ctx.Err() {
 	case context.DeadlineExceeded:
 		log.Printf("deadline exceeded. Aborting req with laptop-id %s", text)

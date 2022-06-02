@@ -1,62 +1,62 @@
 {
- "id":  "e3106fff-246d-4bbb-93a6-16735ee9eee8",
- "brand":  "Lenovo",
- "name":  "Thinkpad P1",
- "cpu":  {
-  "brand":  "AMD",
-  "name":  "Ryzen 7 PRO 2700U",
-  "cores":  4,
-  "threads":  12,
-  "min_ghz":  2.326080271159163,
-  "max_ghz":  3.9085587016884995
+ "id": "0be7e7e1-db8d-44fe-854b-8f1740c547c3",
+ "brand": "Dell",
+ "name": "Latitude",
+ "cpu": {
+  "brand": "AMD",
+  "name": "Ryzen 7 PRO 2700U",
+  "cores": 7,
+  "threads": 11,
+  "min_ghz": 2.648535557112659,
+  "max_ghz": 3.7976521236241085
  },
- "memory":  {
-  "value":  "35",
-  "unit":  "GIGABYTE"
+ "memory": {
+  "value": "9",
+  "unit": "GIGABYTE"
  },
- "gpu":  [
+ "gpu": [
   {
-   "brand":  "AMD",
-   "name":  "RX Vega-56",
-   "min_ghz":  3.29892954437468,
-   "max_ghz":  4.971523480592498,
-   "memory":  {
-    "value":  "6",
-    "unit":  "GIGABYTE"
+   "brand": "NVIDIA",
+   "name": "GTX 1070",
+   "min_ghz": 3.185423093326302,
+   "max_ghz": 4.159968955241927,
+   "memory": {
+    "value": "3",
+    "unit": "GIGABYTE"
    }
   }
  ],
- "storage":  [
+ "storage": [
   {
-   "driver":  "HDD",
-   "memory":  {
-    "value":  "3",
-    "unit":  "TERABYTE"
+   "driver": "HDD",
+   "memory": {
+    "value": "5",
+    "unit": "TERABYTE"
    }
   },
   {
-   "driver":  "SSD",
-   "memory":  {
-    "value":  "424",
-    "unit":  "GIGABYTE"
+   "driver": "SSD",
+   "memory": {
+    "value": "661",
+    "unit": "GIGABYTE"
    }
   }
  ],
- "screen":  {
-  "size_inch":  15.180383,
-  "resolution":  {
-   "width":  7280,
-   "height":  4095
+ "screen": {
+  "size_inch": 13.067954,
+  "resolution": {
+   "width": 2448,
+   "height": 1377
   },
-  "panel":  "IPS",
-  "multitouch":  true
+  "panel": "OLED",
+  "multitouch": true
  },
- "keyboard":  {
-  "layout":  "QWERTZ",
-  "backlit":  false
+ "keyboard": {
+  "layout": "AZERTY",
+  "backlit": true
  },
- "weight_kg":  3.9409519194503613,
- "price":  2948.0929158612416,
- "release_year":  2018,
- "updated_at":  "2022-06-01T13:03:07.021212140Z"
+ "weight_kg": 3.0075272617009796,
+ "price": 1715.1552241655118,
+ "release_year": 2019,
+ "updated_at": "2022-06-02T11:33:35.521109702Z"
 }
